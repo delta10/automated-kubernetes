@@ -25,3 +25,7 @@
     src: /etc/kubernetes/admin.conf
     dest: $HOME/.kube/config
     mode: 0600
+
+- name: Install Weave
+  shell: kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+  
