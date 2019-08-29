@@ -1,0 +1,43 @@
+- name: Remove swapfile from /etc/fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^(.+?\sswap\s+sw\s+.*)$'
+    replace: '# \1'
+
+- name: Disable swap
+  command: swapoff -a
+  when: ansible_swaptotal_mb > 0
+
+- name: Add docker repository key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+
+- name: Add kubernetes repository key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+- name: Add docker repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu xenial stable
+
+- name: Add kubernetes repository
+  apt_repository:
+    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+
+- name: Install docker
+  apt:
+    name: docker-ce=18.06.2~ce~3-0~ubuntu
+
+- name: Install kubelet
+  apt:
+    name: kubelet=1.15.1-00
+
+- name: Install kubeadm
+  apt:
+    name: kubeadm=1.15.1-00
+
+- name: Enable docker service
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
