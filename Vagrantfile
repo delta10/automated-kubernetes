@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
 
     # This is placed within the last VM because we only want to run this once
     node2.vm.provision "ansible" do |ansible|
-      ansible.playbook = "playbook.yml"
+      ansible.playbook = "ansible/playbook.yml"
       ansible.compatibility_mode = "2.0"
       ansible.limit = "all"
       ansible.become = true
