@@ -1,0 +1,13 @@
+docker:
+  version: 18.06.2
+
+kubernetes:
+  version: 1.15.3
+  apiserver_advertise_address: 172.17.8.10
+  pod_subnet: 10.244.0.0/16
+  dns_domain: cluster.local
+  network_plugin: flannel # [weave, flannel]
+  oidc:
+    client_id: 1003424380736-e448ut8etnft6ac7gs51hb77j850f1qe.apps.googleusercontent.com
+    issuer_url: https://accounts.google.com
+    username_claim: email

@@ -1,0 +1,27 @@
+- name: Install common requirements on all the hosts
+  hosts:
+    - k8s_master
+    - k8s_node
+  roles:
+    - k8s-common/install
+
+- name: Install on the first master
+  hosts: k8s_master[0]
+  roles:
+    - { role: k8s-master/install, is_first_master: true }
+
+- name: Install on the other masters
+  hosts: k8s_master[1:]
+  serial: 1
+  roles:
+    - { role: k8s-master/install, is_first_master: false }
+
+- name: Install on the nodes
+  hosts: k8s_node
+  roles:
+    - k8s-node/install
+
+- name: Install network plugin
+  hosts: k8s_master[0]
+  roles:
+    - network-plugin

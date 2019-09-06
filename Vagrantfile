@@ -1,10 +1,19 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
+# if $inventory is not set, try to use sample
+$inventory = "ansible/inventory/sample" if ! $inventory
+$inventory = File.absolute_path($inventory, File.dirname(__FILE__))
+
+# if $inventory has a hosts.ini file use it, otherwise copy over
+# vars etc to where vagrant expects dynamic inventory to be
+if ! File.exist?(File.join(File.dirname($inventory), "hosts.ini"))
+  $vagrant_ansible = File.join(File.dirname(__FILE__), ".vagrant", "provisioners", "ansible")
+  FileUtils.mkdir_p($vagrant_ansible) if ! File.exist?($vagrant_ansible)
+  if ! File.exist?(File.join($vagrant_ansible,"inventory"))
+    FileUtils.ln_s($inventory, File.join($vagrant_ansible,"inventory"))
+  end
+end
 
 Vagrant.configure("2") do |config|
   config.vm.box = "generic/ubuntu1804"
@@ -16,21 +25,21 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "k8s-master1" do |master|
     master.vm.hostname = "k8s-master1"
-    master.vm.network "private_network", ip: "172.21.0.10"
+    master.vm.network :private_network, ip: "172.17.8.10"
   end
 
   config.vm.define "k8s-node1" do |node1|
     node1.vm.hostname = "k8s-node1"
-    node1.vm.network "private_network", ip: "172.21.0.11"
+    node1.vm.network :private_network, ip: "172.17.8.11"
   end
 
   config.vm.define "k8s-node2" do |node2|
     node2.vm.hostname = "k8s-node2"
-    node2.vm.network "private_network", ip: "172.21.0.12"
+    node2.vm.network :private_network, ip: "172.17.8.12"
 
     # This is placed within the last VM because we only want to run this once
     node2.vm.provision "ansible" do |ansible|
-      ansible.playbook = "ansible/playbook.yml"
+      ansible.playbook = "ansible/install.yml"
       ansible.compatibility_mode = "2.0"
       ansible.limit = "all"
       ansible.become = true

@@ -1,0 +1,18 @@
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: "{{ kubernetes.apiserver_advertise_address }}"
+---
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+kubernetesVersion: "{{ kubernetes.version }}"
+networking:
+  podSubnet: "{{ kubernetes.pod_subnet }}"
+  dnsDomain: "{{ kubernetes.dns_domain }}"
+apiServer:
+  certSANs:
+    - 127.0.0.1
+  extraArgs:
+    oidc-client-id: "{{ kubernetes.oidc.client_id }}"
+    oidc-issuer-url: "{{ kubernetes.oidc.issuer_url }}"
+    oidc-username-claim: "{{ kubernetes.oidc.username_claim }}"

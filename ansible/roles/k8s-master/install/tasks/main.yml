@@ -1,0 +1,35 @@
+- name: Install kubectl
+  apt:
+    name: kubectl={{ kubernetes.version }}-00
+    force: yes
+  when:
+    - is_first_master
+
+- name: Create kubeadm configuration
+  template:
+    src: templates/kubeadm.yaml
+    dest: /etc/kubernetes/kubeadm.yaml
+    mode: '0600'
+  when:
+    - is_first_master
+
+- name: Initialize through kubeadm
+  shell: kubeadm init --config /etc/kubernetes/kubeadm.yaml
+  when:
+    - is_first_master
+
+- name: Create $HOME/.kube
+  file:
+    path: ~/.kube
+    state: directory
+  when:
+    - is_first_master
+
+- name: Copy /etc/kubernetes/admin.conf to ~/.kube/config
+  copy:
+    remote_src: yes
+    src: /etc/kubernetes/admin.conf
+    dest: $HOME/.kube/config
+    mode: 0600
+  when:
+    - is_first_master
