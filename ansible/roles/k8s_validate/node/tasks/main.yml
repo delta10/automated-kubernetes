@@ -1,0 +1,5 @@
+- name: Run kube-bench for node
+  shell: docker run --pid=host -v /etc:/etc:ro -v /var:/var:ro -t aquasec/kube-bench:latest node --version 1.13
+  register: kube_bench_results
+
+- debug: msg={{ kube_bench_results.stdout }}

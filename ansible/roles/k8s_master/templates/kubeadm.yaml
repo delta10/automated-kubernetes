@@ -16,3 +16,16 @@ apiServer:
     oidc-client-id: "{{ k8s_oidc_client_id }}"
     oidc-issuer-url: "{{ k8s_oidc_issuer_url }}"
     oidc-username-claim: "{{ k8s_oidc_username_claim }}"
+    profiling: "false"
+    enable-admission-plugins: "NodeRestriction,AlwaysPullImages,ServiceAccount"
+    audit-log-path: "/var/log/k8s-apiserver-audit.log"
+    audit-log-maxage: "30"
+    audit-log-maxbackup: "10"
+    audit-log-maxsize: "100"
+scheduler:
+  extraArgs:
+    profiling: "false"
+controllerManager:
+  extraArgs:
+    profiling: "false"
+    terminated-pod-gc-threshold: "10"

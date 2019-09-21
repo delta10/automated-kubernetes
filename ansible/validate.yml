@@ -1,4 +1,9 @@
-- name: Run validation
+- name: Run validation on master
   hosts: k8s_master[0]
   roles:
-    - k8s_validate
+    - { role: "k8s_validate/master" }
+
+- name: Run validation on node
+  hosts: k8s_node[0]
+  roles:
+    - { role: "k8s_validate/node" }

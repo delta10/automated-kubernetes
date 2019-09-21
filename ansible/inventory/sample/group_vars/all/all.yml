@@ -1,6 +1,6 @@
 docker_version: 18.06.2~ce~3-0~ubuntu
 
-k8s_version: 1.15.3
+k8s_version: 1.15.0
 k8s_apiserver_advertise_address: 172.31.28.202
 k8s_pod_subnet: 10.244.0.0/16
 k8s_dns_domain: cluster.local
