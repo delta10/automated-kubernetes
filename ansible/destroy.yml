@@ -1,7 +1,5 @@
 - hosts:
     - k8s_master
     - k8s_node
-  vars:
-    mode: "destroy"
   roles:
-    - k8s_common
+    - { role: "k8s_common/destroy" }
