@@ -27,7 +27,7 @@ ansible-playbook validate.yml
 To upgrade the cluster run:
 
 ```bash
-ansible-playbook upgrade.yml --extra-vars '{"kubernetes": {"version": "1.14.1"}}'
+ansible-playbook upgrade.yml --extra-vars '{"k8s_version": "1.15.1"}'
 ```
 
 ## Destroying the cluster

@@ -27,3 +27,8 @@
   apt:
     name: kubelet={{ k8s_version }}-00
     force: yes
+
+- name: Restart kubelet
+  systemd:
+    name: kubelet
+    state: restarted

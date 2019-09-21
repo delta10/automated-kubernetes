@@ -13,6 +13,7 @@
     - { role: "k8s_master", is_first_master: false }
 
 - name: Upgrade nodes one by one
+  hosts: k8s_node
   vars:
     mode: "upgrade"
   serial: 1
