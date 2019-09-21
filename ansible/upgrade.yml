@@ -1,21 +1,15 @@
 - name: Initially upgrade the first master
   hosts: k8s_master[0]
-  vars:
-    mode: "upgrade"
   roles:
-    - { role: "k8s_master", is_first_master: true }
+    - { role: "k8s_master/upgrade", is_first_master: true }
 
 - name: Upgrade the other masters
   hosts: k8s_master[1:]
-  vars:
-    mode: "upgrade"
   roles:
-    - { role: "k8s_master", is_first_master: false }
+    - { role: "k8s_master/upgrade", is_first_master: false }
 
 - name: Upgrade nodes one by one
   hosts: k8s_node
-  vars:
-    mode: "upgrade"
   serial: 1
   roles:
-    - { role: "k8s_node" }
+    - { role: "k8s_node/upgrade" }

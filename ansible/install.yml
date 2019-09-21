@@ -1,36 +1,26 @@
 - name: Install common requirements on all the hosts
   hosts: "all"
-  vars:
-    mode: "install"
   roles:
     - { role: "docker" }
-    - { role: "k8s_common" }
+    - { role: "k8s_common/install" }
 
 - name: Install on the first master
   hosts: k8s_master[0]
-  vars:
-    mode: "install"
   roles:
-    - { role: "k8s_master", is_first_master: true }
+    - { role: "k8s_master/install", is_first_master: true }
 
 - name: Install on the other masters
   hosts: k8s_master[1:]
-  vars:
-    mode: "install"
   serial: 1
   roles:
-    - { role: "k8s_master", is_first_master: false }
+    - { role: "k8s_master/install", is_first_master: false }
 
 - name: Install on the nodes
   hosts: k8s_node
-  vars:
-    mode: "install"
   roles:
-    - k8s_node
+    - { role: "k8s_node/install" }
 
 - name: Install network plugin
   hosts: k8s_master[0]
-  vars:
-    mode: "install"
   roles:
-    - k8s_network_plugin
+    - { role: "k8s_network_plugin" }
