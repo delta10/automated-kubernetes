@@ -1,0 +1,22 @@
+- name: Add docker repository key
+  apt_key:
+    url: "{{ docker_apt_key_url }}"
+
+- name: Add docker repository
+  apt_repository:
+    repo: "{{ docker_apt_repository }}"
+
+- name: Install docker
+  package:
+    name: "docker-ce={{ docker_version }}"
+    force: yes
+
+- dpkg_selections:
+    name: docker-ce
+    selection: hold
+
+- name: Enable docker service
+  systemd:
+    name: docker
+    state: started
+    enabled: yes

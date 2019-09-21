@@ -1,0 +1,6 @@
+dependencies:
+  - role: k8s_network_plugin/weave
+    when: k8s_network_plugin == 'weave'
+
+  - role: k8s_network_plugin/flannel
+    when: k8s_network_plugin == 'flannel'

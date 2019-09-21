@@ -6,27 +6,19 @@ variable "ami" {
     default = "ami-0ee06eb8d6eebcde0" # Ubuntu 18.04 (Bionic) LTS
 }
 
-variable "provisioner_user" {
-    default = "ubuntu" # The default user to login when provisioning
-}
-
-variable "salt-master_instance_type" {
-    default = "t2.small"
-}
-
-variable "kube-master_instance_type" {
+variable "k8s-master_instance_type" {
     default = "t2.medium"
 }
 
-variable "kube-master_count" {
+variable "k8s-master_count" {
     default = "1"
 }
 
-variable "kube-node_instance_type" {
+variable "k8s-node_instance_type" {
     default = "t2.medium"
 }
 
-variable "kube-node_count" {
+variable "k8s-node_count" {
     default = "2"
 }
 

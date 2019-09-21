@@ -1,6 +1,6 @@
 - name: Install kubectl
   apt:
-    name: kubectl={{ kubernetes.version }}-00
+    name: kubectl={{ k8s_version }}-00
     force: yes
   when:
     - is_first_master

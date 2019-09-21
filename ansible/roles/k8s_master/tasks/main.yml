@@ -1,0 +1,5 @@
+- import_tasks: "install.yml"
+  when: mode == "install"
+
+- import_tasks: "upgrade.yml"
+  when: mode == "upgrade"

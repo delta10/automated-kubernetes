@@ -1,13 +1,11 @@
-docker:
-  version: 18.06.2
+docker_version: 18.06.2~ce~3-0~ubuntu
 
-kubernetes:
-  version: 1.15.3
-  apiserver_advertise_address: 172.17.8.10
-  pod_subnet: 10.244.0.0/16
-  dns_domain: cluster.local
-  network_plugin: flannel # [weave, flannel]
-  oidc:
-    client_id: 1003424380736-e448ut8etnft6ac7gs51hb77j850f1qe.apps.googleusercontent.com
-    issuer_url: https://accounts.google.com
-    username_claim: email
+k8s_version: 1.15.3
+k8s_apiserver_advertise_address: 172.31.28.202
+k8s_pod_subnet: 10.244.0.0/16
+k8s_dns_domain: cluster.local
+k8s_network_plugin: weave # [weave, flannel]
+
+k8s_oidc_client_id: 1003424380736-e448ut8etnft6ac7gs51hb77j850f1qe.apps.googleusercontent.com
+k8s_oidc_issuer_url: https://accounts.google.com
+k8s_oidc_username_claim: email

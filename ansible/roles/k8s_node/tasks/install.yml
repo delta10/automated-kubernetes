@@ -7,4 +7,4 @@
     kubeadm_join: "{{ kubeadm_join_node_cmd.stdout }}"
 
 - name: Join node through kubeadm
-  shell: "{{ kubeadm_join_node_cmd }}"
+  shell: "{{ kubeadm_join }}"

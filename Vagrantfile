@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# if $inventory is not set, try to use sample
+# if $inventory is not set use sample inventory
 $inventory = "ansible/inventory/sample" if ! $inventory
 $inventory = File.absolute_path($inventory, File.dirname(__FILE__))
 

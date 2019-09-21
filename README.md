@@ -12,19 +12,27 @@ Configure your local environment by changing `inventory/local/hosts.ini` to matc
 Provision the cluster with Ansible by using:
 
 ```bash
-ansible-playbook --limit="all" -i ansible/inventory/local/hosts.ini ansible/install.yml
+cd ansible/
+ansible-playbook install.yml
+```
+
+## Validating the cluster
+Validating the cluster using the [Sonobuoy](https://github.com/heptio/sonobuoy/) and [kube-bench](https://github.com/aquasecurity/kube-bench):
+
+```bash
+ansible-playbook validate.yml
 ```
 
 ## Upgrading the cluster
 To upgrade the cluster run:
 
 ```bash
-ansible-playbook --limit="all" -i ansible/inventory/local/hosts.ini ansible/upgrade.yml --extra-vars '{"kubernetes": {"version": "1.14.1"}}'
+ansible-playbook upgrade.yml --extra-vars '{"kubernetes": {"version": "1.14.1"}}'
 ```
 
 ## Destroying the cluster
 Destroying the cluster can be done using:
 
 ```bash
-ansible-playbook --limit="all" -i ansible/inventory/local/hosts.ini ansible/destroy.yml
+ansible-playbook destroy.yml
 ```

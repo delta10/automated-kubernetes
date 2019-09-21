@@ -1,6 +1,0 @@
-dependencies:
-  - role: network-plugin/weave
-    when: kubernetes.network_plugin == 'weave'
-
-  - role: network-plugin/flannel
-    when: kubernetes.network_plugin == 'flannel'

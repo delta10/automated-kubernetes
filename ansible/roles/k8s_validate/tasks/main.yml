@@ -1,0 +1,21 @@
+- name: Unarchive Sonobuoy
+  unarchive:
+    src: https://github.com/heptio/sonobuoy/releases/download/v0.16.0/sonobuoy_0.16.0_linux_amd64.tar.gz
+   dest: /usr/local/bin
+    creates: /usr/local/bin/sonobuoy
+    remote_src: yes
+
+- name: Run Sonobuoy (quick mode)
+  shell: sonobuoy run --wait --mode quick
+
+- name: View Sonobuoy results
+  shell: sonobuoy status
+  register: sonobuoy_status
+
+- debug: msg={{ sonobuoy_status.stdout }}
+
+- name: Run kube-bench for master
+  shell: docker run --pid=host -v /etc:/etc:ro -v /var:/var:ro -t aquasec/kube-bench:latest master --version 1.13
+
+- name: Run kube-bench for node
+  shell: docker run --pid=host -v /etc:/etc:ro -v /var:/var:ro -t aquasec/kube-bench:latest node --version 1.13

@@ -1,10 +1,10 @@
 - name: Install newer version of kubeadm
   apt:
-    name: kubeadm={{ kubernetes.version }}-00
+    name: kubeadm={{ k8s_version }}-00
     force: yes
 
 - name: Planning cluster upgrade through kubeadm
-  shell: kubeadm upgrade plan {{ kubernetes.version }}
+  shell: kubeadm upgrade plan {{ k8s_version }}
   register: upgrade_plan
   when:
     - is_first_master
@@ -14,7 +14,7 @@
     - is_first_master
 
 - name: Upgrade first master through kubeadm
-  shell: kubeadm upgrade apply -y {{ kubernetes.version }}
+  shell: kubeadm upgrade apply -y {{ k8s_version }}
   when:
     - is_first_master
 
@@ -25,5 +25,5 @@
 
 - name: Install newer version of kubelet
   apt:
-    name: kubelet={{ kubernetes.version }}-00
+    name: kubelet={{ k8s_version }}-00
     force: yes
