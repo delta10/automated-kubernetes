@@ -6,7 +6,7 @@
 This repository contains [Terraform](https://www.terraform.io/) and [Ansible](https://www.ansible.com/) configuration that can be used to deploy a single and multi-master (HA) Kubernetes cluster. The Terraform scripts are specific to AWS, the Ansible scripts can be run on any configured Ansible environment.
 
 ## Prepairing the deployment
-Configure your local environment by changing `inventory/local/hosts.ini` to match your setup.
+Configure your local environment by changing `inventory/local/hosts.ini` to match your setup. Also change `k8s_apiserver_advertise_address` to the internal IP address of the Kubernetes master.
 
 ## Provisioning the cluster
 Provision the cluster with Ansible by using:
@@ -23,8 +23,8 @@ Validating the cluster using the [Sonobuoy](https://github.com/heptio/sonobuoy/)
 ansible-playbook validate.yml
 ```
 
-## Upgrading the cluster
-To upgrade the cluster run:
+## Upgrading and downgrading the cluster
+To upgrade or downgrade the cluster run:
 
 ```bash
 ansible-playbook upgrade.yml --extra-vars '{"k8s_version": "1.15.1"}'
