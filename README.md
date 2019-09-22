@@ -3,7 +3,7 @@
 - Weave or Flannel
 - Docker (18.06.2)
 
-This repository contains [Terraform](https://www.terraform.io/) and [Ansible](https://www.ansible.com/) configuration that can be used to deploy a single and multi-master (HA) Kubernetes cluster. The Terraform scripts are specific to AWS, the Ansible scripts can be run on any configured Ansible environment.
+This repository contains [Terraform](https://www.terraform.io/) and [Ansible](https://www.ansible.com/) configuration that can be used to deploy a single-master Kubernetes cluster. The Terraform scripts are specific to AWS, the Ansible scripts can be run on any configured Ansible environment.
 
 ## Prepairing the deployment
 Configure your local environment by changing `inventory/local/hosts.ini` to match your setup. Also change `k8s_apiserver_advertise_address` to the internal IP address of the Kubernetes master.
