@@ -1,5 +1,5 @@
 # Using Vagrant
-It is possible to run a local cluster for testing purposes using [Vagrant](https://www.vagrantup.com).
+For testing purposes you can spin up a local cluster using [Vagrant](https://www.vagrantup.com).
 
 ## Running
 A simple
