@@ -33,6 +33,10 @@ resource "aws_security_group" "k8s-master" {
         protocol = "tcp"
         security_groups = [ "${data.aws_security_group.default.id}" ]
     }
+
+    tags = {
+        Name = "k8s-master"
+    }
 }
 
 resource "aws_security_group" "k8s-node" {
@@ -62,6 +66,10 @@ resource "aws_security_group" "k8s-node" {
         protocol = "tcp"
         security_groups = [ "${data.aws_security_group.default.id}" ]
     }
+
+    tags = {
+        Name = "k8s-node"
+    }
 }
 
 resource "aws_instance" "k8s-master" {
@@ -73,7 +81,7 @@ resource "aws_instance" "k8s-master" {
     count = "${var.k8s-master_count}"
 
     tags = {
-        Name = "k8s-master-${count.index}"
+        Name = "k8s-master-${count.index + 1}"
     }
 }
 
@@ -86,6 +94,6 @@ resource "aws_instance" "k8s-node" {
     count = "${var.k8s-node_count}"
 
     tags = {
-        Name = "k8s-node-${count.index}"
+        Name = "k8s-node-${count.index + 1}"
     }
 }
