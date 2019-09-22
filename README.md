@@ -30,6 +30,8 @@ To upgrade or downgrade the cluster run:
 ansible-playbook upgrade.yml --extra-vars '{"k8s_version": "1.15.4"}'
 ```
 
+When upgrading to newer versions always follow the [Kubernetes version skew policy](https://kubernetes.io/docs/setup/release/version-skew-policy/).
+
 ## Destroying the cluster
 Destroying the cluster can be done using:
 

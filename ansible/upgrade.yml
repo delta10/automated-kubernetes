@@ -13,3 +13,8 @@
   serial: 1
   roles:
     - { role: "k8s_node/upgrade" }
+
+- name: Upgrade network plugin
+  hosts: k8s_master[0]
+  roles:
+    - { role: "k8s_network_plugin" }
