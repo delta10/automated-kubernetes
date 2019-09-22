@@ -1,7 +1,10 @@
 docker_version: 18.06.2~ce~3-0~ubuntu
 
 k8s_version: 1.15.4
-k8s_apiserver_advertise_address: 172.31.27.244
+
+k8s_apiserver_advertise_address: 172.31.27.244 # single-master, set to the internal IP address of the kube-apiserver
+# k8s_control_plane_endpoint: 172.31.27.244 # multi-master, set to the internal IP address of the load balancer for kube-apiserver
+
 k8s_pod_subnet: 10.244.0.0/16
 k8s_dns_domain: cluster.local
 k8s_network_plugin: weave # [weave, flannel]

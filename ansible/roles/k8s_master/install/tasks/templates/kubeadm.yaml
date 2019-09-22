@@ -1,13 +1,18 @@
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: InitConfiguration
+{% if k8s_apiserver_advertise_address is defined %}
 localAPIEndpoint:
   advertiseAddress: "{{ k8s_apiserver_advertise_address }}"
+{% endif %}
 nodeRegistration:
   name: "{{ inventory_hostname }}"
 ---
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 kubernetesVersion: "{{ k8s_version }}"
+{% if k8s_control_plane_endpoint is defined %}
+controlPlaneEndpoint: "{{ k8s_control_plane_endpoint }}"
+{% endif %}
 networking:
   podSubnet: "{{ k8s_pod_subnet }}"
   dnsDomain: "{{ k8s_dns_domain }}"
@@ -15,7 +20,7 @@ apiServer:
   certSANs:
     - 127.0.0.1
   extraArgs:
-{% if k8s_oidc_client_id and k8s_oidc_issuer_url and k8s_oidc_username_claim %}
+{% if k8s_oidc_client_id is defined and k8s_oidc_issuer_url is defined and k8s_oidc_username_claim is defined %}
     oidc-client-id: "{{ k8s_oidc_client_id }}"
     oidc-issuer-url: "{{ k8s_oidc_issuer_url }}"
     oidc-username-claim: "{{ k8s_oidc_username_claim }}"

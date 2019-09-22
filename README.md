@@ -3,10 +3,10 @@
 - Weave or Flannel
 - Docker (18.06.2)
 
-This repository contains [Terraform](https://www.terraform.io/) and [Ansible](https://www.ansible.com/) configuration that can be used to deploy a single-master Kubernetes cluster. The Terraform scripts are specific to AWS, the Ansible scripts can be run on any configured Ansible environment.
+This repository contains [Terraform](https://www.terraform.io/) and [Ansible](https://www.ansible.com/) configuration that can be used to deploy a single and multi-master (HA) Kubernetes cluster. The Terraform scripts are specific to AWS, the Ansible scripts can be run on any configured Ansible environment.
 
 ## Prepairing the deployment
-Configure your local environment by changing `inventory/local/hosts.ini` to match your setup. Also change `k8s_apiserver_advertise_address` to the internal IP address of the Kubernetes master.
+Configure your local environment by changing `inventory/local/hosts.ini` to match your setup. Also change `k8s_apiserver_advertise_address` or `k8s_control_plane_endpoint` to the internal IP address of the Kubernetes master or load balancer.
 
 ## Provisioning the cluster
 Provision the cluster with Ansible by using:
@@ -16,8 +16,8 @@ cd ansible/
 ansible-playbook install.yml
 ```
 
-## Validating the cluster
-Validating the cluster using the [Sonobuoy](https://github.com/heptio/sonobuoy/) and [kube-bench](https://github.com/aquasecurity/kube-bench):
+## Conformance testing
+You can validate the cluster using [Sonobuoy](https://github.com/heptio/sonobuoy/) and [kube-bench](https://github.com/aquasecurity/kube-bench):
 
 ```bash
 ansible-playbook validate.yml
@@ -27,7 +27,7 @@ ansible-playbook validate.yml
 To upgrade or downgrade the cluster run:
 
 ```bash
-ansible-playbook upgrade.yml --extra-vars '{"k8s_version": "1.15.1"}'
+ansible-playbook upgrade.yml --extra-vars '{"k8s_version": "1.15.4"}'
 ```
 
 ## Destroying the cluster

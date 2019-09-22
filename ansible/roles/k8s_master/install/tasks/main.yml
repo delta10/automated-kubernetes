@@ -33,3 +33,62 @@
     mode: 0600
   when:
     - is_first_master
+
+- name: Retrieve certs from first master
+  fetch:
+    src: "/etc/kubernetes/pki/{{ item.src }}"
+    dest: "tmp/pki/{{ item.subfolder }}"
+    flat: yes
+  delegate_to: "{{ groups['k8s_master'][0] }}"
+  with_items:
+    - { src: 'ca.crt', subfolder: '' }
+    - { src: 'ca.key', subfolder: '' }
+    - { src: 'sa.key', subfolder: '' }
+    - { src: 'sa.pub', subfolder: '' }
+    - { src: 'front-proxy-ca.crt', subfolder: '' }
+    - { src: 'front-proxy-ca.key', subfolder: '' }
+    - { src: 'etcd/ca.crt', subfolder: 'etcd/' }
+    - { src: 'etcd/ca.key', subfolder: 'etcd/' }
+  when:
+    - not is_first_master
+
+- name: Create /etc/kubernetes/pki/etcd folder
+  file:
+    path: /etc/kubernetes/pki/etcd
+    state: directory
+  when:
+    - not is_first_master
+
+- name: Copy certs to new master
+  copy:
+    src: "tmp/pki/{{ item.src }}"
+    dest: "/etc/kubernetes/pki/{{ item.dest }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - { src: 'ca.crt', dest: 'ca.crt', mode: '0644' }
+    - { src: 'ca.key', dest: 'ca.key', mode: '0600' }
+    - { src: 'sa.key', dest: 'sa.key', mode: '0600' }
+    - { src: 'sa.pub', dest: 'sa.pub', mode: '0600' }
+    - { src: 'front-proxy-ca.crt', dest: 'front-proxy-ca.crt', mode: '0644' }
+    - { src: 'front-proxy-ca.key', dest: 'front-proxy-ca.key', mode: '0600' }
+    - { src: 'etcd/ca.crt', dest: 'etcd/ca.crt', mode: '0644' }
+    - { src: 'etcd/ca.key', dest: 'etcd/ca.key', mode: '0600' }
+  when:
+    - not is_first_master
+
+- name: Generate join token
+  shell: kubeadm token create --print-join-command
+  register: kubeadm_join_node_cmd
+  delegate_to: "{{ groups['k8s_master'][0] }}"
+  when:
+    - not is_first_master
+
+- set_fact:
+    kubeadm_join: "{{ kubeadm_join_node_cmd.stdout }}"
+  when:
+    - not is_first_master
+
+- name: Join through kubeadm
+  shell: "{{ kubeadm_join }} --control-plane  --node-name {{ inventory_hostname }}"
+  when:
+    - not is_first_master
