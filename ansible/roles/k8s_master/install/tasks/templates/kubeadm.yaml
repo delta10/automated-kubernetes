@@ -15,9 +15,11 @@ apiServer:
   certSANs:
     - 127.0.0.1
   extraArgs:
+{% if k8s_oidc_client_id and k8s_oidc_issuer_url and k8s_oidc_username_claim %}
     oidc-client-id: "{{ k8s_oidc_client_id }}"
     oidc-issuer-url: "{{ k8s_oidc_issuer_url }}"
     oidc-username-claim: "{{ k8s_oidc_username_claim }}"
+{% endif %}
     profiling: "false"
     enable-admission-plugins: "NodeRestriction,AlwaysPullImages,ServiceAccount"
     audit-log-path: "/var/log/k8s-apiserver-audit.log"

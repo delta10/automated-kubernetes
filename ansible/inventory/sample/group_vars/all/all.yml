@@ -1,7 +1,7 @@
 docker_version: 18.06.2~ce~3-0~ubuntu
 
 k8s_version: 1.15.4
-k8s_apiserver_advertise_address: 172.17.8.10
+k8s_apiserver_advertise_address: 172.31.27.244
 k8s_pod_subnet: 10.244.0.0/16
 k8s_dns_domain: cluster.local
 k8s_network_plugin: weave # [weave, flannel]
