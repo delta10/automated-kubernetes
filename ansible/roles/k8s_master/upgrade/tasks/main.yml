@@ -1,3 +1,10 @@
+- name: Install newer version of kubectl
+  apt:
+    name: kubectl={{ k8s_version }}-00
+    force: yes
+  when:
+    - is_first_master
+
 - name: Install newer version of kubeadm
   apt:
     name: kubeadm={{ k8s_version }}-00
