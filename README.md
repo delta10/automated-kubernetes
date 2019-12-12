@@ -1,5 +1,5 @@
 # Automated Kubernetes
-- Kubernetes (1.15.4)
+- Kubernetes (1.17.0)
 - Docker (18.06.2)
 - Weave or Flannel network layer
 
@@ -27,7 +27,7 @@ ansible-playbook validate.yml
 To upgrade or downgrade the cluster run:
 
 ```bash
-ansible-playbook upgrade.yml --extra-vars '{"k8s_version": "1.15.4"}'
+ansible-playbook upgrade.yml --extra-vars '{"k8s_version": "1.17.0"}'
 ```
 
 When upgrading to newer versions always follow the [Kubernetes version skew policy](https://kubernetes.io/docs/setup/release/version-skew-policy/).
