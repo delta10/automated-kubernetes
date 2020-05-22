@@ -1,14 +1,22 @@
 - name: Install newer version of kubectl
-  apt:
+  package:
     name: kubectl={{ k8s_version }}-00
     force: yes
   when:
     - is_first_master
 
+- dpkg_selections:
+  name: kubectl
+  selection: hold
+
 - name: Install newer version of kubeadm
-  apt:
+  package:
     name: kubeadm={{ k8s_version }}-00
     force: yes
+
+- dpkg_selections:
+  name: kubeadm
+  selection: hold
 
 - name: Planning cluster upgrade through kubeadm
   shell: kubeadm upgrade plan {{ k8s_version }}
@@ -31,9 +39,13 @@
     - not is_first_master
 
 - name: Install newer version of kubelet
-  apt:
+  package:
     name: kubelet={{ k8s_version }}-00
     force: yes
+
+- dpkg_selections:
+  name: kubelet
+  selection: hold
 
 - name: Restart kubelet
   systemd:

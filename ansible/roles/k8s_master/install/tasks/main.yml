@@ -1,9 +1,13 @@
 - name: Install kubectl
-  apt:
+  package:
     name: kubectl={{ k8s_version }}-00
     force: yes
   when:
     - is_first_master
+
+- dpkg_selections:
+  name: kubectl
+  selection: hold
 
 - name: Create kubeadm configuration
   template:
