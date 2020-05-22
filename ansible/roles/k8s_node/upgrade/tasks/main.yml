@@ -4,8 +4,8 @@
     force: yes
 
 - dpkg_selections:
-  name: kubeadm
-  selection: hold
+    name: kubeadm
+    selection: hold
 
 - name: Drain the node
   shell: kubectl drain --ignore-daemonsets {{ inventory_hostname }}
@@ -20,8 +20,8 @@
     force: yes
 
 - dpkg_selections:
-  name: kubelet
-  selection: hold
+    name: kubelet
+    selection: hold
 
 - name: Restart kubelet
   systemd:

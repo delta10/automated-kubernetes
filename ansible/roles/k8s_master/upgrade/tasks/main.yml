@@ -6,8 +6,8 @@
     - is_first_master
 
 - dpkg_selections:
-  name: kubectl
-  selection: hold
+    name: kubectl
+    selection: hold
 
 - name: Install newer version of kubeadm
   package:
@@ -15,8 +15,8 @@
     force: yes
 
 - dpkg_selections:
-  name: kubeadm
-  selection: hold
+    name: kubeadm
+    selection: hold
 
 - name: Planning cluster upgrade through kubeadm
   shell: kubeadm upgrade plan {{ k8s_version }}
@@ -44,8 +44,8 @@
     force: yes
 
 - dpkg_selections:
-  name: kubelet
-  selection: hold
+    name: kubelet
+    selection: hold
 
 - name: Restart kubelet
   systemd:
