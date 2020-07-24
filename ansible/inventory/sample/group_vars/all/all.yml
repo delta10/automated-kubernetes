@@ -1,6 +1,6 @@
 docker_version: 5:19.03.8~3-0~ubuntu-xenial
 
-k8s_version: 1.18.2
+k8s_version: 1.18.6
 
 k8s_apiserver_advertise_address: 172.31.27.244 # single-master, set to the internal IP address of the kube-apiserver
 # k8s_control_plane_endpoint: 172.31.27.244 # multi-master, set to the internal IP address of the load balancer for kube-apiserver
