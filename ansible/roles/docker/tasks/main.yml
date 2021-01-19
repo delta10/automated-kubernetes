@@ -11,8 +11,17 @@
     name: "docker-ce={{ docker_version }}"
     force: yes
 
+- name: Install docker CLI
+  package:
+    name: "docker-ce-cli={{ docker_version }}"
+    force: yes
+
 - dpkg_selections:
     name: docker-ce
+    selection: hold
+
+- dpkg_selections:
+    name: docker-ce-cli
     selection: hold
 
 - name: Enable docker service
